@@ -9,3 +9,8 @@ spring:
     show-sql: true
 server:
   port: 8080
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
