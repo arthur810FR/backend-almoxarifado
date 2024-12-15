@@ -1,5 +1,6 @@
 package com.inc.almoxarifado.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,9 +17,12 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonProperty("name")
     private String name;
 
-    private int quantity;
+    @JsonProperty("quantity")
+    private Integer quantity;
 
-    private double price;
+    @JsonProperty("price")
+    private Double price;
 }
