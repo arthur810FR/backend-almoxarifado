@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -17,7 +18,10 @@ public class ProdutoController {
 
     @PostMapping
     public ResponseEntity<Product> createProduct(@RequestBody Product product) {
-        return ResponseEntity.ok(productService.createProduct(product));
+        Product savedProduct = productService.createProduct(product);
+        return ResponseEntity
+                .created(URI.create("/almo-sys/products/" + savedProduct.getId()))
+                .body(savedProduct);
     }
 
     @GetMapping
