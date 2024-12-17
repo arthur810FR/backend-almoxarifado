@@ -1,5 +1,6 @@
 package com.inc.almoxarifado.service;
 
+import com.inc.almoxarifado.exceptions.ResourceNotFoundException;
 import com.inc.almoxarifado.model.Product;
 import com.inc.almoxarifado.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class ProductService {
 
     public Product getProductById(Long id) {
         return productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Produto não encontrado com o ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado com o ID: " + id));
     }
 
     public void deleteProduct(Long id) {
@@ -32,7 +33,8 @@ public class ProductService {
     }
 
     public Product updateProduct(Long id, Product productDetails) {
-        Product product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Produto não encontrado!"));
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado com o ID: " + id));
         product.setName(productDetails.getName());
         product.setQuantity(productDetails.getQuantity());
         product.setPrice(productDetails.getPrice());
