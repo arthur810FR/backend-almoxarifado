@@ -1,6 +1,5 @@
 package com.inc.almoxarifado.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
@@ -16,6 +15,8 @@ public class Product {
     private Integer quantity;
 
     private Double price;
+
+    private String description;
 
 
     public Long getId() {
@@ -48,5 +49,13 @@ public class Product {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
