@@ -63,7 +63,7 @@ src/
 ### Backend:
 1. Clone este repositório:
    ```bash
-   git clone
+   git clone https://github.com/arthur810FR/almoxarifado--api.git
    ```
 2. **Navegue até o diretório do projeto**
 
