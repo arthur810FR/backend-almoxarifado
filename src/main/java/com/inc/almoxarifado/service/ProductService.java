@@ -1,45 +1,18 @@
 package com.inc.almoxarifado.service;
 
-import com.inc.almoxarifado.exceptions.ResourceNotFoundException;
 import com.inc.almoxarifado.model.Product;
-import com.inc.almoxarifado.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class ProductService {
+public interface ProductService {
 
-    @Autowired
-    private ProductRepository productRepository;
+    Product createProduct(Product product);
 
-    public Product createProduct(Product product) {
-        return productRepository.save(product);
-    }
+    List<Product> getAllProducts();
 
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
-    }
+    Product getProductById(Long id);
 
-    public Product getProductById(Long id) {
-        return productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado com o ID: " + id));
-    }
+    Product updateProduct(Long id, Product productDetails);
 
-    public void deleteProduct(Long id) {
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado com o ID: " + id));
-        productRepository.delete(product);
-    }
-
-    public Product updateProduct(Long id, Product productDetails) {
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado com o ID: " + id));
-        product.setName(productDetails.getName());
-        product.setQuantity(productDetails.getQuantity());
-        product.setPrice(productDetails.getPrice());
-        product.setDescription(productDetails.getDescription());
-        return productRepository.save(product);
-    }
+    void deleteProduct(Long id);
 }
