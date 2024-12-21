@@ -1,12 +1,13 @@
 package com.inc.almoxarifado.service;
 
 import com.inc.almoxarifado.model.Product;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface ProductService {
 
-    Product createProduct(Product product);
+    ResponseEntity<Product> createProduct(Product product);
 
     List<Product> getAllProducts();
 

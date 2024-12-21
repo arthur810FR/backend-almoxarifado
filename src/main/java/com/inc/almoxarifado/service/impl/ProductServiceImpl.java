@@ -5,8 +5,10 @@ import com.inc.almoxarifado.model.Product;
 import com.inc.almoxarifado.repository.ProductRepository;
 import com.inc.almoxarifado.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.net.URI;
 import java.util.List;
 
 @Service
@@ -16,8 +18,10 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
     @Override
-    public Product createProduct(Product product) {
-        return productRepository.save(product);
+    public ResponseEntity<Product> createProduct(Product product) {
+        Product savedProduct = productRepository.save(product);
+        URI location = URI.create("/almo-sys/products/" + savedProduct.getId());
+        return ResponseEntity.created(location).body(savedProduct);
     }
 
     @Override
