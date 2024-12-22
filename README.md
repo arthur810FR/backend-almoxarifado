@@ -12,7 +12,7 @@ Este projeto é um sistema completo para o gerenciamento de produtos. Desenvolvi
 
 ## Demonstração em Vídeo 🎥
 
-
+[🎬 Assista à Demonstração do Projeto](videos/demo.mp4)
 
 ## Tecnologias Utilizadas 🛠️
 
