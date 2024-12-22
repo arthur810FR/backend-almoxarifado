@@ -79,6 +79,10 @@ src/
    ```
 2. Abra o arquivo index.html no VSCode e clique com um botão direito e selecione a opção Live Server(Instale a dependência no VSCode).
 
+3. O frontend pode ser acessado diretamente através do link:
+
+[Frontend - Sistema de Gerenciamento de Produtos](https://github.com/arthur810FR/front-almoxarifado)
+
 ## Validações e Tratamento de Exceções ⚠️
 
 O backend utiliza validações robustas para garantir a integridade dos dados:
