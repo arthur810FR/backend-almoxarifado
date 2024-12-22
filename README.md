@@ -75,7 +75,7 @@ src/
 
 1. Clone o repositório do frontend:
    ```bash
-   git clone
+   git clone https://github.com/arthur810FR/front-almoxarifado.git
    ```
 2. Abra o arquivo index.html no VSCode e clique com um botão direito e selecione a opção Live Server(Instale a dependência no VSCode).
 
