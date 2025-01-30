@@ -17,6 +17,7 @@ public class ProdutoController {
 
     @PostMapping
     public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+        validateProduct(product);
         return productService.createProduct(product);
     }
 
@@ -41,5 +42,17 @@ public class ProdutoController {
     public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product productDetails) {
         Product updatedProduct = productService.updateProduct(id, productDetails);
         return ResponseEntity.ok(updatedProduct);
+    }
+
+    private void validateProduct(Product product) {
+        if (product.getName() == null || product.getName().isEmpty()) {
+            throw new IllegalArgumentException("O nome do produto é obrigatório.");
+        }
+        if (product.getCode() == null || product.getCode().isEmpty()) {
+            throw new IllegalArgumentException("O código do produto é obrigatório.");
+        }
+        if (product.getSupplier() == null || product.getSupplier().isEmpty()) {
+            throw new IllegalArgumentException("O fornecedor do produto é obrigatório.");
+        }
     }
 }
