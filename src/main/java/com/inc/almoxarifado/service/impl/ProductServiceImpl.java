@@ -19,6 +19,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseEntity<Product> createProduct(Product product) {
+        validateProduct(product);
         Product savedProduct = productRepository.save(product);
         URI location = URI.create("/almo-sys/products/" + savedProduct.getId());
         return ResponseEntity.created(location).body(savedProduct);
@@ -39,10 +40,17 @@ public class ProductServiceImpl implements ProductService {
     public Product updateProduct(Long id, Product productDetails) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado com o ID: " + id));
+
+        validateProduct(productDetails);
+
         product.setName(productDetails.getName());
         product.setQuantity(productDetails.getQuantity());
         product.setPrice(productDetails.getPrice());
         product.setDescription(productDetails.getDescription());
+        product.setCode(productDetails.getCode());
+        product.setCategory(productDetails.getCategory());
+        product.setSupplier(productDetails.getSupplier());
+
         return productRepository.save(product);
     }
 
@@ -51,5 +59,21 @@ public class ProductServiceImpl implements ProductService {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado com o ID: " + id));
         productRepository.delete(product);
+    }
+
+
+    private void validateProduct(Product product) {
+        if (product.getName() == null || product.getName().isEmpty()) {
+            throw new IllegalArgumentException("O nome do produto é obrigatório.");
+        }
+        if (product.getCode() == null || product.getCode().isEmpty()) {
+            throw new IllegalArgumentException("O código do produto é obrigatório.");
+        }
+        if (product.getSupplier() == null || product.getSupplier().isEmpty()) {
+            throw new IllegalArgumentException("O fornecedor do produto é obrigatório.");
+        }
+        if (product.getQuantity() == null || product.getQuantity() < 0) {
+            throw new IllegalArgumentException("A quantidade inicial do produto deve ser positiva.");
+        }
     }
 }
