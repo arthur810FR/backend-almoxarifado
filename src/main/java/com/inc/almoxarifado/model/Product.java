@@ -12,8 +12,6 @@ public class Product {
 
     private String name;
     private Integer quantity;
-    private Double price;
-    private String description;
     private String code;
     private String category;
     private String supplier;
@@ -41,22 +39,6 @@ public class Product {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getCode() {

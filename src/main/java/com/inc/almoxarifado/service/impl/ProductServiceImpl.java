@@ -5,6 +5,8 @@ import com.inc.almoxarifado.model.Product;
 import com.inc.almoxarifado.repository.ProductRepository;
 import com.inc.almoxarifado.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +21,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseEntity<Product> createProduct(Product product) {
-        validateProduct(product);
+        validateProduct(product);  // Validação dos campos obrigatórios
         Product savedProduct = productRepository.save(product);
         URI location = URI.create("/almo-sys/products/" + savedProduct.getId());
         return ResponseEntity.created(location).body(savedProduct);
@@ -41,12 +43,9 @@ public class ProductServiceImpl implements ProductService {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado com o ID: " + id));
 
-        validateProduct(productDetails);
-
+        validateProduct(productDetails);  // Validação antes de atualizar
         product.setName(productDetails.getName());
         product.setQuantity(productDetails.getQuantity());
-        product.setPrice(productDetails.getPrice());
-        product.setDescription(productDetails.getDescription());
         product.setCode(productDetails.getCode());
         product.setCategory(productDetails.getCategory());
         product.setSupplier(productDetails.getSupplier());
@@ -61,19 +60,27 @@ public class ProductServiceImpl implements ProductService {
         productRepository.delete(product);
     }
 
+    @Override
+    public Page<Product> getFilteredProducts(String name, String category, Pageable pageable) {
+        return productRepository.findByFilters(
+                (name == null || name.isBlank()) ? null : name,
+                (category == null || category.isBlank()) ? null : category,
+                pageable
+        );
+    }
 
     private void validateProduct(Product product) {
-        if (product.getName() == null || product.getName().isEmpty()) {
-            throw new IllegalArgumentException("O nome do produto é obrigatório.");
+        if (product.getName() == null || product.getName().isBlank()) {
+            throw new IllegalArgumentException("O campo 'name' é obrigatório.");
         }
-        if (product.getCode() == null || product.getCode().isEmpty()) {
-            throw new IllegalArgumentException("O código do produto é obrigatório.");
+        if (product.getCode() == null || product.getCode().isBlank()) {
+            throw new IllegalArgumentException("O campo 'code' é obrigatório.");
         }
-        if (product.getSupplier() == null || product.getSupplier().isEmpty()) {
-            throw new IllegalArgumentException("O fornecedor do produto é obrigatório.");
+        if (product.getCategory() == null || product.getCategory().isBlank()) {
+            throw new IllegalArgumentException("O campo 'category' é obrigatório.");
         }
-        if (product.getQuantity() == null || product.getQuantity() < 0) {
-            throw new IllegalArgumentException("A quantidade inicial do produto deve ser positiva.");
+        if (product.getSupplier() == null || product.getSupplier().isBlank()) {
+            throw new IllegalArgumentException("O campo 'supplier' é obrigatório.");
         }
     }
 }
