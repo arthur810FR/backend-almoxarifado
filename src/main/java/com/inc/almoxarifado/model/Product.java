@@ -11,12 +11,12 @@ public class Product {
     private Long id;
 
     private String name;
-
     private Integer quantity;
-
     private Double price;
-
     private String description;
+    private String code;
+    private String category;
+    private String supplier;
 
 
     public Long getId() {
@@ -57,5 +57,29 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(String supplier) {
+        this.supplier = supplier;
     }
 }
