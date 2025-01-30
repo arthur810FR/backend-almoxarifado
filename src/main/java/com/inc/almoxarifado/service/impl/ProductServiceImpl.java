@@ -40,17 +40,33 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product updateProduct(Long id, Product productDetails) {
-        Product product = productRepository.findById(id)
+        Product existingProduct = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado com o ID: " + id));
 
-        validateProduct(productDetails);  // Validação antes de atualizar
-        product.setName(productDetails.getName());
-        product.setQuantity(productDetails.getQuantity());
-        product.setCode(productDetails.getCode());
-        product.setCategory(productDetails.getCategory());
-        product.setSupplier(productDetails.getSupplier());
+        validateUpdate(productDetails);
 
-        return productRepository.save(product);
+        existingProduct.setName(productDetails.getName());
+        existingProduct.setQuantity(productDetails.getQuantity());
+        existingProduct.setCategory(productDetails.getCategory());
+        existingProduct.setCode(productDetails.getCode());
+        existingProduct.setSupplier(productDetails.getSupplier());
+
+        return productRepository.save(existingProduct);
+    }
+
+    private void validateUpdate(Product productDetails) {
+        if (productDetails.getName() == null || productDetails.getName().isBlank()) {
+            throw new IllegalArgumentException("O campo 'name' é obrigatório.");
+        }
+        if (!productDetails.getCode().matches("^PROD\\d+$")) {
+            throw new IllegalArgumentException("O código do produto deve começar com 'PROD' seguido de números.");
+        }
+        if (productDetails.getQuantity() == null || productDetails.getQuantity() < 0) {
+            throw new IllegalArgumentException("A quantidade inicial deve ser maior ou igual a zero.");
+        }
+        if (productDetails.getSupplier() == null || productDetails.getSupplier().isBlank()) {
+            throw new IllegalArgumentException("O campo 'supplier' é obrigatório.");
+        }
     }
 
     @Override

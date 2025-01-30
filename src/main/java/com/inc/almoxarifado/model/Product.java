@@ -15,6 +15,7 @@ public class Product {
     private String code;
     private String category;
     private String supplier;
+    private String imageUrl;
 
 
     public Long getId() {
@@ -63,5 +64,13 @@ public class Product {
 
     public void setSupplier(String supplier) {
         this.supplier = supplier;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
